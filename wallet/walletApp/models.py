@@ -10,10 +10,7 @@ class Wallet(models.Model):
         User, null=True, on_delete=models.CASCADE)
     currency = models.CharField(max_length=50, default='NGN')
     created_at = models.DateTimeField(default=timezone.now, null=True)
-    account_number = models.CharField(max_length=100, default='', blank=True)
-    bank_code = models.CharField(max_length=100, default='', blank=True)
-    recipient_code = models.CharField(max_length=100, default='', blank=True)
-
+    
     def __str__(self):
         return self.user.__str__()
 
@@ -29,10 +26,6 @@ class WalletTransaction(models.Model):
         max_length=200, null=True,  choices=TRANSACTION_TYPES)
     amount = models.DecimalField(max_digits=100, null=True, decimal_places=2)
     timestamp = models.DateTimeField(default=timezone.now, null=True)
-    source = models.ForeignKey(
-        Wallet, null=True, on_delete=models.CASCADE, related_name='source', blank=True)
-    destination = models.ForeignKey(
-        Wallet, null=True, on_delete=models.CASCADE, related_name='destination', blank=True)
     status = models.CharField(max_length=100, default="pending")
     paystack_payment_reference = models.CharField(max_length=100, default='', blank=True)
 
